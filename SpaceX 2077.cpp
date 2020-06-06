@@ -284,7 +284,16 @@ else if(credits < 9999)
 cout << crDisplay;
 }
 cout << " " << crDisplayK << endl;
-cout << "|  Income: " << creditsGen*creditBoost << " (Boost: " << creditBoost << ") cr/sec\n";
+cout << "|  Income: ";
+if((creditsGen*creditBoost) > 1000000)
+{
+cout << (creditsGen*creditBoost)/1000000.0 << " KK";
+}
+else if((creditsGen*creditBoost) < 1000000)
+{
+cout << (creditsGen*creditBoost);
+}
+cout << " (Boost: " << creditBoost << ") cr/sec\n";
 cout << "|  Peoples: ";
 if(peoples > 10000)
 {
@@ -332,7 +341,16 @@ else if(credits < 9999)
 cout << crDisplay;
 }
 cout << " " << crDisplayK << endl;
-cout << "|  Income: " << creditsGen*creditBoost << " (Boost: " << creditBoost << ") cr/sec\n";
+cout << "|  Income: ";
+if((creditsGen*creditBoost) > 1000000)
+{
+cout << (creditsGen*creditBoost)/1000000.0 << " KK";
+}
+else if((creditsGen*creditBoost) < 1000000)
+{
+cout << (creditsGen*creditBoost);
+}
+cout << " (Boost: " << creditBoost << ") cr/sec\n";
 cout << "|  Peoples: ";
 if(peoples > 10000)
 {
@@ -414,7 +432,16 @@ cout << "/\n";
 cout << "|  " << ar << "Credit boost: +0,1 for " << creditBoostCost << " cr." << endl;
 cout << "|  " << br << "Speed boost: +0,1 for " << speedBoostCost << " cr." << endl;
 cout << "|  " << cr << "Demography boost: +0,1 for " << peopleBoostCost << " cr." << endl;
-cout << "|  " << dr << "Upgrade ship: +" << speedIncrease << " a.e/sec for " << speedCostInTech << " tech." << endl;
+cout << "|  " << dr << "Upgrade ship: +" << speedIncrease << " a.e/sec for "; 
+if(speedCostInTech > 1000000)
+{
+cout << speedCostInTech/1000000.0 << " KK\n";
+}
+else if(speedCostInTech < 1000000)
+{
+cout << speedCostInTech;
+}
+cout << " tech." << endl;
 cout << "|  " << fr << "Antimatter gen: +1 for " << antimatterGenCostInCredits << " cr. and " << antimatterGenCostInTech << " tech." << endl;
 cout << "|  " << hr << "Universe overclock: set TPS " << 1000.0/(tickSpeed-100) << " for " << tickRateCost << " antimatter\n";
 cout << "\\___________________________________________________________________________\n";
