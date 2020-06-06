@@ -5,25 +5,25 @@
 #include <ctime>
 #define KEYDOWN(VK_KEY) ((GetAsyncKeyState(VK_KEY) ? 1:0))
 
-unsigned long long randomOchka(long int randomGlekus)
+unsigned long long randomOchka(long int randomLimit)
 {
 	static unsigned long seed = time(0);
 	seed = (2281337999 * seed + 14486661337);
-	unsigned long long chker = seed % randomGlekus;
+	unsigned long long chker = seed % randomLimit;
 	if(chker == 0)
 	{
 		return 2;
 	}
 	else if(chker > 0)
 	{
-		return seed % randomGlekus;
+		return seed % randomLimit;
 	}
 }
 
 using namespace std;
 //Cheat code
 int cheat;
-// Игровые переменные
+// game data
 string crDisplayK;
 string ar,br,cr,dr,fr,hr;
 int galaxy = 3;
@@ -47,7 +47,7 @@ string peopleDisplayK;
 double peopleDisplay;
 int antimatterGen = 0;
 int freePlanets = 1;
-// Магазинные переменные
+// market data
 int buy = 1;
 double creditBoost = 1;
 double speedBoost = 1;
@@ -61,7 +61,7 @@ unsigned long long antimatterGenCostInTech = 100;
 unsigned long long tickRateCost = 1;
 double speedCostInTech = 0.01;
 int speedIncrease = 50;
-//Покупки
+//buy functions
 void buyCreditBoost()
 {
 	if(credits > creditBoostCost)
@@ -119,7 +119,7 @@ void buyTickRate()
 		tickSpeed-=100;
 	}
 }
-//Колонизация
+//Colonization
 void colony()
 {
 	credits = credits - planetPrice;
@@ -140,7 +140,7 @@ void actionsPerSecond()
 	
 	credits += (creditsGen*creditBoost);
 	antimatter += antimatterGen;
-	//Демография
+	//demography
 	peoplePlus = ((randomOchka(30)/1000.0)*peoples)*peopleBoost;	
 
 	if(((peoples/100000000.0)/planets) > 1)
@@ -170,7 +170,7 @@ void actionsPerSecond()
 	demography = peoplePlus-peopleMinus;
 	}
 	peoples += demography;
-	//Колонизация
+	//colonization manage
 	tech = tech + (randomOchka(10)/1000000.0)*peoples;
 	if(dist < (speed*speedBoost))
 	{
@@ -184,7 +184,7 @@ void actionsPerSecond()
 	{
 		colony();
 	}
-	//Классы кредитов
+	//credits
 	if(credits > 10000 && credits < 1000000)
 	{
 		crDisplayK = "K";
@@ -205,7 +205,7 @@ void actionsPerSecond()
 		crDisplayK = "KKK";
 		crDisplay = credits/1000000000.0;
 	}
-	//Классы людей
+	//peoples
 	if(peoples > 10000 && peoples < 1000000)
 	{
 		peopleDisplayK = "K";
@@ -274,7 +274,7 @@ void tui()
 			cout << "\n\tSpaceX galaxy mission control\n";
 			cout << " _______________________________________________\n";
 cout << "/\n";
-cout << "|  Кредиты: ";
+cout << "|  Credits: ";
 if(credits > 10000)
 {
 printf("%.3f", crDisplay);
@@ -284,8 +284,8 @@ else if(credits < 9999)
 cout << crDisplay;
 }
 cout << " " << crDisplayK << endl;
-cout << "|  Заработок: " << creditsGen*creditBoost << " (Boost: " << creditBoost << ") кр/сек\n";
-cout << "|  Колонисты: ";
+cout << "|  Income: " << creditsGen*creditBoost << " (Boost: " << creditBoost << ") cr/sec\n";
+cout << "|  Peoples: ";
 if(peoples > 10000)
 {
 printf("%.3f", peopleDisplay);
@@ -295,9 +295,9 @@ else if(peoples < 9999)
 cout << peopleDisplay;
 }
 cout << " " << peopleDisplayK << endl;
-cout << "|  Демография: " << demography << " (Boost: " << peopleBoost << ") чел/сек\n";
-cout << "|  Планеты: " << planets << endl;
-cout << "|  Технологии: ";
+cout << "|  Demography: " << demography << " (Boost: " << peopleBoost << ") people/sec\n";
+cout << "|  Planets: " << planets << endl;
+cout << "|  Technology: ";
 if(tech > 1000000)
 {
 cout << tech/1000000.0 << " KK\n";
@@ -306,15 +306,15 @@ else if(tech < 1000000)
 {
 cout << tech << endl;
 }
-cout << "|  Антиматерия: " << antimatter << endl;
-cout << "|  Скорость линкора: " << speed*speedBoost << " (Boost: " << speedBoost << ") а.е/сек\n";
-cout << "|  Длина полёта: " << dist << endl;
-cout << "|  Цена колонизации: " << planetPrice << endl;
+cout << "|  Antimatter: " << antimatter << endl;
+cout << "|  Ship speed: " << speed*speedBoost << " (Boost: " << speedBoost << ") a.e/sec\n";
+cout << "|  Flight distance: " << dist << endl;
+cout << "|  Colonization price: " << planetPrice << endl;
 cout << "\\_______________________________________________\n";
-cout << "\n\t     Тиков в секунду: ";
+cout << "\n\t     Ticks per second: ";
 printf("%.2f", 1000.0/tickSpeed);
 cout << endl;
-cout << "\n       Открыть меню магазина - \"Пробел\"\n";
+cout << "\n     	    Open shop menu - \"SPACE\"\n";
 		}
 		if(menu == 2)
 		{
@@ -322,7 +322,7 @@ cout << "\n       Открыть меню магазина - \"Пробел\"\n";
 			cout << "\n\tSpaceX galaxy mission control\n";
 			cout << " ___________________________________________________________________________\n";
 cout << "/\n";
-cout << "|  Кредиты: ";
+cout << "|  Credits: ";
 if(credits > 10000)
 {
 printf("%.3f", crDisplay);
@@ -332,8 +332,8 @@ else if(credits < 9999)
 cout << crDisplay;
 }
 cout << " " << crDisplayK << endl;
-cout << "|  Заработок: " << creditsGen*creditBoost << " (Boost: " << creditBoost << ") кр/сек\n";
-cout << "|  Колонисты: ";
+cout << "|  Income: " << creditsGen*creditBoost << " (Boost: " << creditBoost << ") cr/sec\n";
+cout << "|  Peoples: ";
 if(peoples > 10000)
 {
 printf("%.3f", peopleDisplay);
@@ -343,9 +343,9 @@ else if(peoples < 9999)
 cout << peopleDisplay;
 }
 cout << " " << peopleDisplayK << endl;
-cout << "|  Демография: " << demography << " (Boost: " << peopleBoost << ") чел/сек\n";
-cout << "|  Планеты: " << planets << endl;
-cout << "|  Технологии: ";
+cout << "|  Demography: " << demography << " (Boost: " << peopleBoost << ") people/sec\n";
+cout << "|  Planets: " << planets << endl;
+cout << "|  Technology: ";
 if(tech > 1000000)
 {
 cout << tech/1000000.0 << " KK\n";
@@ -354,10 +354,10 @@ else if(tech < 1000000)
 {
 cout << tech << endl;
 }
-cout << "|  Антиматерия: " << antimatter << endl;
-cout << "|  Скорость линкора: " << speed*speedBoost << " (Boost: " << speedBoost << ") а.е/сек\n";
-cout << "|  Длина полёта: " << dist << endl;
-cout << "|  Цена колонизации: " << planetPrice << endl;
+cout << "|  Antimatter: " << antimatter << endl;
+cout << "|  Ship speed: " << speed*speedBoost << " (Boost: " << speedBoost << ") a.e/sec\n";
+cout << "|  Flight distance: " << dist << endl;
+cout << "|  Colonization price: " << planetPrice << endl;
 cout << "\\___________________________________________________________________________\n";
 			if (KEYDOWN(VK_DOWN))
 		{
@@ -411,14 +411,14 @@ cout << "\\_____________________________________________________________________
 		
 			cout << " ___________________________________________________________________________\n";
 cout << "/\n";
-cout << "|  " << ar << "Буст кредитов: +0,1 за " << creditBoostCost << " кр." << endl;
-cout << "|  " << br << "Буст скорости: +0,1 за " << speedBoostCost << " кр." << endl;
-cout << "|  " << cr << "Буст демографии: +0,1 за " << peopleBoostCost << " кр." << endl;
-cout << "|  " << dr << "Улучшить линкор: +" << speedIncrease << " а.е/сек за " << speedCostInTech << " техн." << endl;
-cout << "|  " << fr << "Генератор антиматерии: +1 за " << antimatterGenCostInCredits << " кр. и " << antimatterGenCostInTech << " техн." << endl;
-cout << "|  " << hr << "Ускоритель Вселенной: установить на " << 1000.0/(tickSpeed-100) << " за " << tickRateCost << " антиматерии\n";
+cout << "|  " << ar << "Credit boost: +0,1 for " << creditBoostCost << " cr." << endl;
+cout << "|  " << br << "Speed boost: +0,1 for " << speedBoostCost << " cr." << endl;
+cout << "|  " << cr << "Demography boost: +0,1 for " << peopleBoostCost << " cr." << endl;
+cout << "|  " << dr << "Upgrade ship: +" << speedIncrease << " a.e/sec for " << speedCostInTech << " tech." << endl;
+cout << "|  " << fr << "Antimatter gen: +1 for " << antimatterGenCostInCredits << " cr. and " << antimatterGenCostInTech << " tech." << endl;
+cout << "|  " << hr << "Universe overclock: set TPS " << 1000.0/(tickSpeed-100) << " for " << tickRateCost << " antimatter\n";
 cout << "\\___________________________________________________________________________\n";
-cout << "\n  Стрелки \"Вверх\", \"Вниз\" для переключения покупок\n  \"Enter\" - купить улучшение\n  \"Пробел\" - вернуться в основное меню\n";
+cout << "\n  Arrows \"UP\", \"DOWN\" for scrolling\n  \"ENTER\" - buy selected upgrade\n  \"SPACE\" - back to main menu\n";
 		
 			if (KEYDOWN(VK_RETURN))
 			{
@@ -450,7 +450,6 @@ cout << "\n  Стрелки \"Вверх\", \"Вниз\" для переключения покупок\n  \"Enter\" -
 
 int main()
 {
-	setlocale(LC_ALL, "Russian");
 	SetConsoleTitle("SpaceX 2077");
 	tui();
 	
