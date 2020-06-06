@@ -1,2 +1,2 @@
 # SpaceX-2077
-My first console game
+Welcome to my first repository with my first console game :D
